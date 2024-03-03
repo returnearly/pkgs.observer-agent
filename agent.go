@@ -183,8 +183,18 @@ func main() {
 		return
 	}
 
-	// Send the JSON data via an HTTP POST request
-	resp, err := http.Post(ingestEndpoint, "application/json", bytes.NewBuffer(jsonData))
+	// Send the JSON data via an HTTP POST request with the user agent set to pkgs.observer-agent/1.0
+
+	req, err := http.NewRequest("POST", ingestEndpoint, bytes.NewBuffer(jsonData))
+
+	req.Header.Set("User-Agent", "pkgs.observer-agent/1.0")
+
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+
+	resp, err := client.Do(req)
+
 	if err != nil {
 		fmt.Println("Error sending POST request:", err)
 		return

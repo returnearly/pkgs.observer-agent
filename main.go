@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/denisbrodbeck/machineid"
 	"log"
 	"net/http"
 	"os"
@@ -12,12 +13,13 @@ import (
 )
 
 type Package struct {
-	Line string `json:"line"`
+	RawLine string `json:"raw"`
 }
 
 type Payload struct {
 	Version        string    `json:"version"`
 	Hostname       string    `json:"hostname"`
+	MachineID      string    `json:"machine_id"`
 	Distribution   string    `json:"distribution"`
 	PackageManager string    `json:"package_manager"`
 	Packages       []Package `json:"packages"`
@@ -33,8 +35,8 @@ func getPackageManagerCommand(packageManager string) *exec.Cmd {
 		cmd = exec.Command("pacman", "-Qu")
 	case "yum":
 		cmd = exec.Command("yum", "list", "updates")
-	case "brew":
-		cmd = exec.Command("brew", "outdated")
+	case "homebrew":
+		cmd = exec.Command("brew", "outdated", "--verbose")
 	default:
 		log.Fatal("Unsupported package manager")
 	}
@@ -50,8 +52,6 @@ func getUpgradablePackages(packageManager string) ([]Package, error) {
 
 	output, err := cmd.Output()
 
-	log.Println(string(output))
-
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func getUpgradablePackages(packageManager string) ([]Package, error) {
 			continue
 		}
 
-		packages = append(packages, Package{Line: string(line)})
+		packages = append(packages, Package{RawLine: string(line)})
 	}
 
 	log.Println(packages)
@@ -107,12 +107,23 @@ func getPackageManager(distro string) (string, error) {
 	case "centos":
 		packageManager = "yum"
 	case "macos":
-		packageManager = "brew"
+		packageManager = "homebrew"
 	default:
 		return "", fmt.Errorf("unsupported distribution")
 	}
 
 	return packageManager, nil
+}
+
+func getMachineID() (string, error) {
+	var machineID string
+
+	machineID, err := machineid.ProtectedID("pkgs.observer")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return machineID, nil
 }
 
 func fileExists(filename string) bool {
@@ -143,6 +154,12 @@ func main() {
 		return
 	}
 
+	machineID, err := getMachineID()
+	if err != nil {
+		fmt.Println("Error getting machine id:", err)
+		return
+	}
+
 	distro, err := getDistro()
 	if err != nil {
 		fmt.Println("Error getting distribution:", err)
@@ -164,6 +181,7 @@ func main() {
 	payload := Payload{
 		Version:        "1",
 		Hostname:       hostname,
+		MachineID:      machineID,
 		Distribution:   distro,
 		Packages:       packages,
 		PackageManager: packageManager,
@@ -183,12 +201,9 @@ func main() {
 		return
 	}
 
-	// Send the JSON data via an HTTP POST request with the user agent set to pkgs.observer-agent/1.0
-
 	req, err := http.NewRequest("POST", ingestEndpoint, bytes.NewBuffer(jsonData))
 
 	req.Header.Set("User-Agent", "pkgs.observer-agent/1.0")
-
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
@@ -202,4 +217,5 @@ func main() {
 	defer resp.Body.Close()
 
 	fmt.Println("Packages sent successfully to", ingestEndpoint)
+	fmt.Println("JSON payload:", string(jsonData))
 }

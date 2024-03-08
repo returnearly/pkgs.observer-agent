@@ -65,8 +65,6 @@ func getUpgradablePackages(packageManager string) ([]Package, error) {
 		packages = append(packages, Package{RawLine: string(line)})
 	}
 
-	log.Println(packages)
-
 	return packages, nil
 }
 
@@ -217,5 +215,4 @@ func main() {
 	defer resp.Body.Close()
 
 	fmt.Println("Packages sent successfully to", ingestEndpoint)
-	fmt.Println("JSON payload:", string(jsonData))
 }

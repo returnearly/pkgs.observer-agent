@@ -44,7 +44,7 @@ jobs:
             echo "VERSION=$(echo "${GITHUB_REF_NAME}" | sed -e 's/^v//')"
             echo "DESCRIPTION=A service to send package status information to https://pkgs.observer"
             echo "DEB_ARCHITECTURE=${{ matrix.ARCHITECTURE }}"
-            echo "RPM_ARCHITECTURE=${{ matrix.ARCHITECTURE }"
+            echo "RPM_ARCHITECTURE=${{ matrix.ARCHITECTURE }}"
             echo "RELEASE=1"
             cd REPO
             echo "FIRST_YEAR=$(git log $(git rev-list --max-parents=0 HEAD) --date="format:%Y" --format="format:%ad")"

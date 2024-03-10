@@ -1,0 +1,10 @@
+[Unit]
+Description=Logs some system statistics to the systemd journal
+Requires=pkgs-observer-agent.service
+
+[Timer]
+Unit=pkgs-observer-agent.service
+OnCalendar=*:0/15 # every 15 minutes
+
+[Install]
+WantedBy=timers.target

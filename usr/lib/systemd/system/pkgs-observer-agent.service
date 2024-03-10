@@ -1,0 +1,10 @@
+[Unit]
+Description=Monitor Package Statues for reporting to https://pkgs.observer
+Wants=pkgs-observer-agent.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/pkgs-observer-agent
+
+[Install]
+WantedBy=multi-user.target

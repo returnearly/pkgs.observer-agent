@@ -5,7 +5,7 @@ Wants=pkgs-observer-agent.timer
 [Service]
 Type=oneshot
 ExecStart=/usr/sbin/pkgs-observer-agent
-EnvironmentFile=/etc/pkgs-observer-agent.d/service.conf
+EnvironmentFile=/etc/pkgs-observer-agent.conf.d/service.conf
 
 [Install]
 WantedBy=multi-user.target

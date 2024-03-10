@@ -86,9 +86,9 @@ jobs:
         uses: dsaltares/fetch-gh-release-asset@master
         with:
           repo: "${{ github.repository }}"
-          version: "${{ github.event.release.tag_name }}"
-          file: "pkgs.observer-agent-${{ github.event.release.tag_name }}-linux-${{ matrix.ARCHITECTURE}}"
-          target: "SOURCES/${GITHUB_REPO_NAME}/usr/sbin/pkgs-observer-agent"
+          version: "${{ github.event.release.id }}"
+          file: "pkgs.observer-agent-${{ github.event.release.tag_name }}-linux-${{ matrix.ARCHITECTURE }}"
+          target: "SOURCES/pkgs-observer-agent/usr/sbin/pkgs-observer-agent"
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Control File

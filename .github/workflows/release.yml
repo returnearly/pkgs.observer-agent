@@ -91,6 +91,10 @@ jobs:
           target: "SOURCES/pkgs-observer-agent/usr/sbin/pkgs-observer-agent"
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set the permissions
+        run: |
+          chmod 755 "SOURCES/pkgs-observer-agent/usr/sbin/pkgs-observer-agent"
+
       - name: Create Control File
         # Fields from https://www.debian.org/doc/debian-policy/ch-controlfields.html#binary-package-control-files-debian-control
         run: |

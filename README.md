@@ -1,4 +1,4 @@
-# Terminate Notice
+# pkgs-observer-agent
 
 ___Report Package Status Changes to pkgs.observer___
 

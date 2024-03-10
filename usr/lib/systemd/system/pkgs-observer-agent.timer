@@ -4,7 +4,7 @@ Requires=pkgs-observer-agent.service
 
 [Timer]
 Unit=pkgs-observer-agent.service
-OnCalendar=*:0/15 # every 15 minutes
+OnCalendar=*:0/15
 
 [Install]
 WantedBy=timers.target

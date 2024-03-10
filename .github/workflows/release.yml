@@ -23,6 +23,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
+          compress_assets: OFF
 
   package:
     name: Create Packages
@@ -40,7 +41,7 @@ jobs:
       - name: Calculate some variables
         run: |
           (
-            echo "GITHUB_REPO_NAME=$(echo "${GITHUB_REPOSITORY}" | cut -d/ -f2)"
+            echo "GITHUB_REPO_NAME=pkgs-observer-agent"
             echo "VERSION=$(echo "${GITHUB_REF_NAME}" | sed -e 's/^v//')"
             echo "DESCRIPTION=A service to send package status information to https://pkgs.observer"
             echo "DEB_ARCHITECTURE=${{ matrix.ARCHITECTURE }}"

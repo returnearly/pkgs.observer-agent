@@ -31,6 +31,8 @@ func getPackageManagerCommand(packageManager string) *exec.Cmd {
 	switch packageManager {
 	case "apt":
 		cmd = exec.Command("apt", "list", "--upgradable")
+	case "apk":
+		cmd = exec.Command("apk", "list", "--upgradable")
 	case "pacman":
 		cmd = exec.Command("pacman", "-Qu")
 	case "yum":

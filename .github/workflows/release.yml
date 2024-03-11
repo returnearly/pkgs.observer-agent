@@ -30,7 +30,10 @@ jobs:
     needs: build
     strategy:
       matrix:
-        ARCHITECTURE: [amd64, arm64]
+        ARCHITECTURE: [
+          amd64,
+#          arm64,
+        ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

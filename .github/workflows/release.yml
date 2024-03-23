@@ -27,6 +27,7 @@ jobs:
           goarch: ${{ matrix.goarch }}
           md5sum: OFF
           compress_assets: OFF
+          ldflags: "-X main.version=${{ github.event.release.tag_name }} -X main.commit=${{ github.sha }}"
 
   package:
     runs-on: ubuntu-latest
@@ -64,9 +65,6 @@ jobs:
             fi
             cd ..
           ) >> $GITHUB_ENV
-
-      - name: Set the VERSION
-        run: sed -i 's/VERSION=/VERSION=${{ env.VERSION }}/' REPO/etc/pkgs-observer-agent.conf.d/service.conf && cat REPO/etc/pkgs-observer-agent.conf.d/service.conf
 
       - name: Make Directory Structure
         run: mkdir -p "SOURCES/${GITHUB_REPO_NAME}" SPECS release

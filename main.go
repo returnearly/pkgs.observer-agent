@@ -12,6 +12,8 @@ import (
 	"runtime"
 )
 
+var version = "unknown"
+
 type Package struct {
 	RawLine string `json:"raw"`
 }
@@ -175,12 +177,6 @@ func main() {
 	packages, err := getUpgradablePackages(packageManager)
 	if err != nil {
 		fmt.Println("Error:", err)
-		return
-	}
-
-	version := os.Getenv("VERSION")
-	if version == "" {
-		fmt.Println("Error: VERSION environment variable not set")
 		return
 	}
 

@@ -136,6 +136,9 @@ jobs:
       - name: Create Spec File
         run: PATH="REPO/.github/scripts:${PATH}" create_spec_file.sh
 
+      - name: Set the VERSION
+        run: sed -i 's/VERSION=/VERSION=${{ env.VERSION }}/' ./etc/pkgs-observer-agent.conf.d/service.conf && cat ./etc/pkgs-observer-agent.conf.d/service.conf
+
       - name: Build DEB Package
         run: dpkg-deb --build SOURCES/${GITHUB_REPO_NAME} "${{ env.GITHUB_REPO_NAME }}_${{ env.VERSION }}_${{ env.DEB_ARCHITECTURE }}.deb"
 

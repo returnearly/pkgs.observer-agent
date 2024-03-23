@@ -178,8 +178,14 @@ func main() {
 		return
 	}
 
+	version := os.Getenv("VERSION")
+	if version == "" {
+		fmt.Println("Error: VERSION environment variable not set")
+		return
+	}
+
 	payload := Payload{
-		Version:        "1",
+		Version:        version,
 		Hostname:       hostname,
 		MachineID:      machineID,
 		Distribution:   distro,
@@ -203,7 +209,7 @@ func main() {
 
 	req, err := http.NewRequest("POST", ingestEndpoint, bytes.NewBuffer(jsonData))
 
-	req.Header.Set("User-Agent", "pkgs.observer-agent/1.0")
+	req.Header.Set("User-Agent", "pkgs.observer-agent/"+version)
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}

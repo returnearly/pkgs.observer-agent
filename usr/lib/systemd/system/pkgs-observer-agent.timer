@@ -5,6 +5,8 @@ Requires=pkgs-observer-agent.service
 [Timer]
 Unit=pkgs-observer-agent.service
 OnCalendar=*:0/15
+RandomizedDelaySec=900
+Persistent=true
 
 [Install]
 WantedBy=timers.target

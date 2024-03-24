@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/returnearly/pkgs.observer-agent/compare/v0.2.0...v0.2.1) (2024-03-24)
+
+
+### Bug Fixes
+
+* dont include service.conf so it doesnt get overwritten ([f01184a](https://github.com/returnearly/pkgs.observer-agent/commit/f01184aed60efca8e9b9484ee1942e8b75672359))
+
 ## [0.2.0](https://github.com/returnearly/pkgs.observer-agent/compare/v0.1.1...v0.2.0) (2024-03-24)
 
 

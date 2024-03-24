@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/returnearly/pkgs.observer-agent/compare/v0.1.1...v0.2.0) (2024-03-24)
+
+
+### Features
+
+* reduce the delay randomization to 5 mins window ([aa2e5ab](https://github.com/returnearly/pkgs.observer-agent/commit/aa2e5abcd2d0c1827844c468106d6e40cd9906ee))
+
 ## [0.1.1](https://github.com/returnearly/pkgs.observer-agent/compare/v0.1.0...v0.1.1) (2024-03-24)
 
 
